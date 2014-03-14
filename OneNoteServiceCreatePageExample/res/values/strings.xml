@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+//*********************************************************
+// Copyright (c) Microsoft Corporation
+// All rights reserved. 
+//
+// Licensed under the Apache License, Version 2.0 (the ""License""); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// http://www.apache.org/licenses/LICENSE-2.0 
+//
+// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT 
+// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS 
+// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
+// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR 
+// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT. 
+//
+// See the Apache Version 2.0 License for specific language 
+// governing permissions and limitations under the License.
+//*********************************************************
+ -->
+<resources>
+
+    <string name="app_name">OneNote Service Example</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Auth Related Strings -->
+    <string name="auth_yes">Authenticated</string>
+    <string name="auth_no">Not Authenticated</string>
+    <string name="auth_err">Error signing in:</string>
+
+    <!-- Button Strings -->
+    <string name="btn_auth">Authenticate</string>
+    <string name="btn_sendHTML">Create Simple Page using HTML</string>
+    <string name="btn_sendImg">Create Page with Image</string>
+    <string name="btn_sendEmbeddedHTML">Create Page with Snapshot of Embedded HTML</string>
+    <string name="btn_sendURL">Create Page with Snapshot of URL</string>
+    <string name="btn_sendAttachment">Create Page with an attachment</string>
+    <string name="btn_signout">Sign Out</string>
+    <string name="title_activity_results">ResultsActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Response Page Strings -->
+    <string name="lbl_Response_Title">RESPONSE:</string>
+    <string name="lbl_clientLink_Title">ONENOTE CLIENT LINK:</string>
+   <string name="lbl_webLink_Title">ONENOTE WEB LINK:</string>
+   <string name="txtView_Status">Status...</string>
+</resources>
