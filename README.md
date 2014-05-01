@@ -1,4 +1,3 @@
-
 ## OneNote API Android Sample README
 
 Created by Microsoft Corporation, 2014. Provided As-is without warranty. Trademarks mentioned here are the property of their owners.
@@ -12,7 +11,7 @@ find additional documentation at the links below.
 * [POST simple HTML to a new OneNote QuickNotes page](http://msdn.microsoft.com/EN-US/library/office/dn575428.aspx)
 * [POST multi-part message with image data included in the request](http://msdn.microsoft.com/EN-US/library/office/dn575432.aspx)
 * [POST page with a URL rendered as an image](http://msdn.microsoft.com/EN-US/library/office/dn575431.aspx)
-* [POST page with a PDF file attachment](http://msdn.microsoft.com/en-us/library/office/dn575436.aspx)
+* [POST page with a PDF file attachment](http://msdn.microsoft.com/en-us/library/office/dn655137.aspx)
 * [Extract the returned oneNoteClientURL and oneNoteWebURL links](http://msdn.microsoft.com/EN-US/library/office/dn575433.aspx)
 
 ### Prerequisites
