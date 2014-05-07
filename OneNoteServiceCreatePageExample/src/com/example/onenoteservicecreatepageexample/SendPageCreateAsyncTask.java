@@ -42,7 +42,7 @@ import android.os.AsyncTask;
 public class SendPageCreateAsyncTask extends
 AsyncTask<String, String, ApiResponse> {
 
-	private final String PAGES_ENDPOINT = "https://www.onenote.com/api/v1.0/pages";
+	private final static String PAGES_ENDPOINT = "https://www.onenote.com/api/v1.0/pages";
 	private OutputStream mOutputStream = null;
 	private final String DELIMITER = "--";
 	private final String BOUNDARY = "Asdfs"+Long.toString(System.currentTimeMillis()) + "aBc";
@@ -56,34 +56,44 @@ AsyncTask<String, String, ApiResponse> {
 
 		String scenario = params[0];
 		mAccessToken = params[1];
+		String sectionName = params[2];
 
 		if (scenario == "Simple" ) {
 
-			return createSimplePage();
+			return createSimplePage(sectionName);
 		} else if (scenario == "Image" ) {
 
-			return createPageWithImage();
+			return createPageWithImage(sectionName);
 
 		} else if (scenario == "URL") {
 
-			return createPageWithUrlScreenShot();
+			return createPageWithUrlScreenShot(sectionName);
 
 		} else if ( scenario == "HTML" ) {
 
-			return createPageWithHTMLScreenshot();
+			return createPageWithHTMLScreenshot(sectionName);
 
-		} else if(scenario == "Attachment") {
+		} else if(scenario == "AttachmentWithPdfRendering") {
 
-			return createPageWithAttachment();
+			return createPageWithAttachmentAndPdfRendering(sectionName);
 
 		}
 		return null;
 	}
+	
+	private static String getPagesEndpointUrlWithSectionName(String sectionName) {
+		return (PAGES_ENDPOINT + "/?sectionName=" + sectionName);
+	}
 
-	private ApiResponse createPageWithHTMLScreenshot() {
+	private ApiResponse createPageWithHTMLScreenshot(String sectionName) {
 
 		try {
-			this.postMultipartRequest(PAGES_ENDPOINT);
+			if(sectionName == null || sectionName.trim().isEmpty()) {
+				this.postMultipartRequest(PAGES_ENDPOINT);
+			}
+			else {
+				this.postMultipartRequest(getPagesEndpointUrlWithSectionName(sectionName));
+			}
 			String embeddedPartName = "embedded1";
 			String date = getDate();
 			String embeddedWebPage =
@@ -125,10 +135,15 @@ AsyncTask<String, String, ApiResponse> {
 	}
 
 	// This method demonstrates how to create a OneNote page that contains a screenshot of a URL.
-	private ApiResponse createPageWithUrlScreenShot() {
+	private ApiResponse createPageWithUrlScreenShot(String sectionName) {
 
 		try {
-			this.postMultipartRequest(PAGES_ENDPOINT);
+			if(sectionName == null || sectionName.trim().isEmpty()) {
+				this.postMultipartRequest(PAGES_ENDPOINT);
+			}
+			else {
+				this.postMultipartRequest(getPagesEndpointUrlWithSectionName(sectionName));
+			}
 			String date = getDate();
 			String simpleHtml = 	"<html>" +
 					"<head>" +
@@ -161,9 +176,14 @@ AsyncTask<String, String, ApiResponse> {
 
 	}
 
-	public ApiResponse createSimplePage() {
+	public ApiResponse createSimplePage(String sectionName) {
 		try {
-			this.postMultipartRequest(PAGES_ENDPOINT);
+			if(sectionName == null || sectionName.trim().isEmpty()) {
+				this.postMultipartRequest(PAGES_ENDPOINT);
+			}
+			else {
+				this.postMultipartRequest(getPagesEndpointUrlWithSectionName(sectionName));
+			}
 			String date = getDate();
 			String simpleHtml = "<html>" +
 					"<head>" +
@@ -203,14 +223,19 @@ AsyncTask<String, String, ApiResponse> {
 	}
 
 	/**
-	 * Creates a page with a document file attachment
+	 * Creates a page with a PDF document file attachment and with the same PDF rendered on the page
 	 * @return The response received from the OneNote Service API for the create page operation
 	 */
-	public ApiResponse createPageWithAttachment() {
+	public ApiResponse createPageWithAttachmentAndPdfRendering(String sectionName) {
 		String attachmentPartName = "pdfattachment1";
 		InputStream is = null;
 		try {
-			this.postMultipartRequest(PAGES_ENDPOINT);
+			if(sectionName == null || sectionName.trim().isEmpty()) {
+				this.postMultipartRequest(PAGES_ENDPOINT);
+			}
+			else {
+				this.postMultipartRequest(getPagesEndpointUrlWithSectionName(sectionName));
+			}
 			String date = getDate();
 			String requestHtml = "<html>" +
 					"<head>" +
@@ -220,6 +245,8 @@ AsyncTask<String, String, ApiResponse> {
 					"<body>" +
 					"<p>This page contains a pdf file attachment</p>" + 
 					"<object data-attachment=\"attachment.pdf\" data=\"name:" + attachmentPartName + "\" />" +
+					"<p>Here's the content of the PDF document :</p>" +
+					"<img data-render-src=\"name:" + attachmentPartName + "\" alt=\"A beautiful logo\" width=\"1500\" />" +
 					"</body>" +
 					"</html>";
 			is = assetManager.open("attachment.pdf");
@@ -248,10 +275,15 @@ AsyncTask<String, String, ApiResponse> {
 		}
 	}
 
-	public ApiResponse createPageWithImage() {
+	public ApiResponse createPageWithImage(String sectionName) {
 		InputStream is = null;
 		try {
-			this.postMultipartRequest(PAGES_ENDPOINT);
+			if(sectionName == null || sectionName.trim().isEmpty()) {
+				this.postMultipartRequest(PAGES_ENDPOINT);
+			}
+			else {
+				this.postMultipartRequest(getPagesEndpointUrlWithSectionName(sectionName));
+			}
 			String date = getDate();
 			String imagePartName = "image1";
 			String requestPresentationContent = "<html>" +

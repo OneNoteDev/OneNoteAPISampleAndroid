@@ -61,6 +61,24 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_horizontal"
+         android:orientation="horizontal" >
+
+        <EditText
+         android:id="@+id/sectionName"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:inputType="text"
+         android:hint="@string/sectionNameHint"
+         android:ems="10" />
+
+    </LinearLayout>
+     
+     
     
      <LinearLayout
         android:layout_width="fill_parent"
@@ -124,12 +142,13 @@
         android:layout_marginBottom="15dp"
         android:orientation="horizontal" >
         <Button
-            android:id="@+id/btn_createPageWithAttachment"
+            android:id="@+id/btn_createPageWithAttachmentAndPdfRendering"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="btn_sendAttachment_onClick"
-            android:text="@string/btn_sendAttachment" />
+            android:onClick="btn_sendAttachmentWithPdfRendering_onClick"
+            android:text="@string/btn_sendAttachmentWithPdfRendering" />
+            
    </LinearLayout>
    
    <LinearLayout

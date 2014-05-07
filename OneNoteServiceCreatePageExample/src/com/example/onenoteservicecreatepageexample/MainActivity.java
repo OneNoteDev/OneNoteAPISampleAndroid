@@ -29,10 +29,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 
 import com.microsoft.live.LiveAuthClient;
 import com.microsoft.live.LiveAuthException;
@@ -50,15 +53,16 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 	private final String CLIENT_ID_MESSAGE = "Insert Your Client Id Here";
 	private Date accessTokenExpiration = null;
 	private String refreshToken = null;
-
+	private EditText sectionNameTextBox = null;
+	private String sectionName = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		sectionName = "";
 		setContentView(R.layout.activity_main);
-
 		resultTextView = (TextView) findViewById(R.id.txtView_Auth);
 		mAuthClient = new LiveAuthClient(this, Constants.CLIENTID);
-
 		if(Constants.CLIENTID.equals(CLIENT_ID_MESSAGE))
 		{
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -74,6 +78,27 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 		setCreatePageButtonsVisibility(false);
 		Button signoutButton = (Button) findViewById(R.id.btn_signout);
 		signoutButton.setEnabled(false);
+		sectionNameTextBox = (EditText) findViewById(R.id.sectionName);
+		sectionNameTextBox.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable sectionNameField) {
+				sectionName = sectionNameTextBox.getText().toString();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
+				//No handling done by this sample here
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				//No handling done by this sample here
+			}
+			
+		});
 	}
 
 	@Override
@@ -92,7 +117,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 		urlPageButton.setEnabled(visibility);
 		Button embeddedHTMLPageButton = (Button) findViewById(R.id.btn_sendEmbeddedHTML);
 		embeddedHTMLPageButton.setEnabled(visibility);
-		Button attachmentPageButton = (Button) findViewById(R.id.btn_createPageWithAttachment);
+		Button attachmentPageButton = (Button) findViewById(R.id.btn_createPageWithAttachmentAndPdfRendering);
 		attachmentPageButton.setEnabled(visibility);
 	}
 
@@ -103,7 +128,6 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 			resultTextView.setText(R.string.auth_yes);
 			mAccessToken = session.getAccessToken();
 			accessTokenExpiration = session.getExpiresIn();
-			System.out.println("Access token expires at  : " + accessTokenExpiration.toString());
 			refreshToken = session.getRefreshToken();
 			mLiveConnectClient = new LiveConnectClient(session);
 			setCreatePageButtonsVisibility(true);
@@ -153,7 +177,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 		{
 			SendPageCreateAsyncTask task = new SendPageCreateAsyncTask();
 			task.delegate = this;
-			task.execute("Simple", mAccessToken);
+			task.execute("Simple", mAccessToken, sectionName);
 		}
 		else
 		{
@@ -167,7 +191,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 	/**
 	 * Called when the user clicks the attachment request button
 	 */
-	public void btn_sendAttachment_onClick(View view) {
+	public void btn_sendAttachmentWithPdfRendering_onClick(View view) {
 		boolean success = StartRequest();
 		if(success)
 		{
@@ -175,7 +199,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 			task.delegate = this;
 			AssetManager assetManager = getResources().getAssets();
 			task.assetManager = assetManager;
-			task.execute("Attachment", mAccessToken);
+			task.execute("AttachmentWithPdfRendering", mAccessToken, sectionName);
 		}
 		else
 		{
@@ -195,7 +219,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 			task.delegate = this;
 			AssetManager assetManager = getResources().getAssets();
 			task.assetManager = assetManager;
-			task.execute("Image", mAccessToken);
+			task.execute("Image", mAccessToken, sectionName);
 		}
 		else
 		{
@@ -275,7 +299,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 		{
 			SendPageCreateAsyncTask task = new SendPageCreateAsyncTask();
 			task.delegate = this;
-			task.execute("HTML", mAccessToken);
+			task.execute("HTML", mAccessToken, sectionName);
 		}
 		else
 		{
@@ -291,7 +315,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 		{
 			SendPageCreateAsyncTask task = new SendPageCreateAsyncTask();
 			task.delegate = this;
-			task.execute("URL", mAccessToken);
+			task.execute("URL", mAccessToken, sectionName);
 		}
 		else
 		{

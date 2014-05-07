@@ -36,9 +36,11 @@
     <string name="btn_sendEmbeddedHTML">Create Page with Snapshot of Embedded HTML</string>
     <string name="btn_sendURL">Create Page with Snapshot of URL</string>
     <string name="btn_sendAttachment">Create Page with an attachment</string>
+    <string name="btn_sendAttachmentWithPdfRendering">Create Page with a PDF document attached and rendered</string>
     <string name="btn_signout">Sign Out</string>
     <string name="title_activity_results">ResultsActivity</string>
     <string name="hello_world">Hello world!</string>
+	<string name="sectionNameHint">Enter Section Name</string>
 
     <!-- Response Page Strings -->
     <string name="lbl_Response_Title">RESPONSE:</string>
