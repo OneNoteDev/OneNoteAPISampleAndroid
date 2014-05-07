@@ -1,5 +1,4 @@
-
-## OneNote service API Android Sample README
+## OneNote API Android Sample README
 
 Created by Microsoft Corporation, 2014. Provided As-is without warranty. Trademarks mentioned here are the property of their owners.
 
