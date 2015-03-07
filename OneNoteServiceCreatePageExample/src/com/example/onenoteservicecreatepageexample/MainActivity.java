@@ -51,6 +51,7 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 	private TextView resultTextView;
 	private String mAccessToken = null;
 	private final String CLIENT_ID_MESSAGE = "Insert Your Client Id Here";
+    private final Iterable<String> scopes = Arrays.asList("office.onenote_create" /*Create pages*/, "office.onenote_update_by_app" /*Edit pages created by the app*/, "wl.signin" /*WL Sign in access*/, "wl.offline_access" /*Refresh token access*/);
 	private Date accessTokenExpiration = null;
 	private String refreshToken = null;
 	private EditText sectionNameTextBox = null;
@@ -162,11 +163,14 @@ public class MainActivity extends Activity implements LiveAuthListener, AsyncRes
 
 	/** Called when the user clicks the Authenticate Button */
 	public void callOAuth(View vew) {
-
-		super.onStart();
-		Iterable<String> scopes = Arrays.asList("office.onenote_create", "wl.signin", "wl.offline_access");
 		mAuthClient.login(this, scopes, this);
 	}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuthClient.initialize(scopes, this);
+    }
 
 
 	/** Called when the user clicks the HTML Button */
